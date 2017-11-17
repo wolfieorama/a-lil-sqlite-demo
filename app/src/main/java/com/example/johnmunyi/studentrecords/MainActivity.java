@@ -17,8 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbHandler = new MyDbHandler(getApplicationContext(), name, factory, version);
+        dbHandler = new MyDbHandler(this, name, factory, version);
         dbHandler.insertStudent("Mike Jones");
         dbHandler.insertStudent("John Major");
+        dbHandler.insertStudent("Mape and Sons");
     }
 }
