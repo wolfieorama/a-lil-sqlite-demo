@@ -1,8 +1,11 @@
 package com.example.johnmunyi.studentrecords;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.io.Serializable;
 
 /**
  * Created by johnmunyi on 11/17/17.
@@ -13,17 +16,18 @@ public class MyDbHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "grades.db";
     private static final String TABLE_STUDENTS = "students";
+    private static final String COL_STD_NAME = "name";
     private static final String TABLE_COURSES = "courses";
     private static final String TABLE_QUIZES = "quizes";
 
+    SQLiteDatabase mSqLiteDatabase;
     public MyDbHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String create_table_students = "CREATE TABLE STUDENTS(ID INTEGER PRIMARY_KEY, NAME TEXT);";
+        String create_table_students = "CREATE TABLE STUDENTS(ID INTEGER PRIMARY_KEY," + COL_STD_NAME + " TEXT);";
         sqLiteDatabase.execSQL(create_table_students);
 
         String create_table_courses = "CREATE TABLE COURSES(ID INTEGER PRIMARY_KEY, NAME TEXT);";
@@ -37,4 +41,20 @@ public class MyDbHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
+    public void insertStudent(String name){
+        mSqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COL_STD_NAME, name);
+        mSqLiteDatabase.insert(TABLE_STUDENTS, null, values);
+        mSqLiteDatabase.close();
+    }
+
+//    public void insertCourse(String name){
+//        mSqLiteDatabase = this.getWritableDatabase();
+//
+//        ContentValues values = new ContentValues();
+//        values.put();
+//    }
 }
