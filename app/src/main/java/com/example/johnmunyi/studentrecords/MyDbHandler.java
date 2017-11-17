@@ -2,10 +2,13 @@ package com.example.johnmunyi.studentrecords;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by johnmunyi on 11/17/17.
@@ -39,7 +42,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
         String create_table_courses = "CREATE TABLE COURSES(ID INTEGER PRIMARY_KEY AUTO_INCREMENT, " + COL_CRS_NAME + " TEXT);";
         sqLiteDatabase.execSQL(create_table_courses);
 
-        String create_table_quizes = "CREATE TABLE QUIZES(ID INTEGER PRIMARY_KEY AUTO_INCREMENT, QUIZ_NUMBER TEXT, STUDENT_ID INTEGER, COURSE_ID INTEGER);";
+        String create_table_quizes = "CREATE TABLE QUIZES(ID INTEGER PRIMARY_KEY AUTO_INCREMENT, " + COL_QZ_NUM + " TEXT, " + COL_CRS_ID + " INTEGER, " + COL_STD_ID + " INTEGER, " + COL_QZ_SCORE + " INTEGER);";
         sqLiteDatabase.execSQL(create_table_quizes);
     }
 
@@ -61,7 +64,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
         mSqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COL_CRS_ID, name);
+        values.put(COL_CRS_NAME, name);
         mSqLiteDatabase.insert(TABLE_COURSES, null, values);
         mSqLiteDatabase.close();
     }
@@ -76,5 +79,39 @@ public class MyDbHandler extends SQLiteOpenHelper {
         values.put(COL_QZ_SCORE, score);
 
         mSqLiteDatabase.insert(TABLE_QUIZES, null, values);
+    }
+
+    public void getAllStudents(){
+        mSqLiteDatabase = this.getReadableDatabase();
+
+        String selectStudents = "SELECT * FROM TABLE STUDENTS;";
+        Cursor cursor = mSqLiteDatabase.rawQuery(selectStudents, null);
+
+        if (cursor.moveToFirst()){
+            do{
+                int student_id = cursor.getInt(0);
+                String student_name = cursor.getString(1);
+            }while (cursor.moveToNext());
+        }
+
+        mSqLiteDatabase.close();
+    }
+
+//    ArrayList of Course returned here for the listView
+    public ArrayList getAllCourses(){
+        mSqLiteDatabase = this.getWritableDatabase();
+        ArrayList<Courses> courses = new ArrayList<Courses>();
+
+        String selectCourses = "SELECT * FROM TABLE COURSES";
+        Cursor cursor = mSqLiteDatabase.rawQuery(selectCourses, null);
+
+        if (cursor.moveToFirst()){
+            do{
+                Courses course = new Courses(cursor.getInt(0), cursor.getString(1));
+                courses.add(course);
+            }while (cursor.moveToNext());
+        }
+        mSqLiteDatabase.close();
+        return courses;
     }
 }
