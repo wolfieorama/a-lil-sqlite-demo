@@ -55,4 +55,15 @@ public class Quizes {
     public void setScore(int score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "Quizes{" +
+                "quiz_num='" + quiz_num + '\'' +
+                ", id=" + id +
+                ", courseId=" + courseId +
+                ", studentId=" + studentId +
+                ", score=" + score +
+                '}';
+    }
 }

@@ -1,13 +1,18 @@
 package com.example.johnmunyi.studentrecords;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.johnmunyi.studentrecords.DB.MyDbHandler;
 import com.example.johnmunyi.studentrecords.model.Courses;
+import com.example.johnmunyi.studentrecords.model.Quizes;
 
 import java.util.ArrayList;
 
@@ -18,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private int version;
     private SQLiteDatabase.CursorFactory factory;
     private ArrayList<Courses> courses;
+    private ArrayList<Quizes> quizes;
 
 
     @Override
@@ -26,24 +32,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHandler = new MyDbHandler(this, name, factory, version);
-        dbHandler.insertStudent("Mike Jones");
-        dbHandler.insertStudent("John Major");
-        dbHandler.insertStudent("Mape and Sons");
+        dbHandler.insertStudent(1,"Mike Jones");
+        dbHandler.insertStudent(2,"John Major");
+        dbHandler.insertStudent(3,"Mape and Sons");
 
-        dbHandler.insertCourse("Fundamentals");
-        dbHandler.insertCourse("JSPD");
-        dbHandler.insertCourse("Stochastic");
-        dbHandler.insertCourse("Machine Learning");
-        dbHandler.insertCourse("Data Structures");
-        dbHandler.insertCourse("Linear Systems");
-        dbHandler.insertCourse("Foundations of SE");
-        dbHandler.insertCourse("Practicum");
+        dbHandler.insertCourse(1,"Fundamentals");
+        dbHandler.insertCourse(2,"JSPD");
+        dbHandler.insertCourse(3,"Stochastic");
+        dbHandler.insertCourse(4,"Machine Learning");
+        dbHandler.insertCourse(5,"Data Structures");
+        dbHandler.insertCourse(6,"Linear Systems");
+        dbHandler.insertCourse(8,"Foundations of SE");
+        dbHandler.insertCourse(9,"Practicum");
 
 
-        dbHandler.insertQuiz("Quiz1", 1, 1, 94);
-        dbHandler.insertQuiz("Quiz2", 2, 2, 99);
-        dbHandler.insertQuiz("Quiz3", 3, 3, 88);
-        dbHandler.insertQuiz("Quiz4", 1, 2, 81);
+        dbHandler.insertQuiz(1,"Quiz1", 1, 1, 94);
+        dbHandler.insertQuiz(2,"Quiz2", 2, 2, 99);
+        dbHandler.insertQuiz(3,"Quiz3", 3, 3, 88);
+        dbHandler.insertQuiz(4,"Quiz4", 1, 2, 81);
+        dbHandler.insertQuiz(5,"Quiz1", 1, 2, 88);
 
         courses = dbHandler.getAllCourses();
         ArrayAdapter<Courses> adapter = new ArrayAdapter<Courses>(
@@ -55,5 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
         ListView courses_list = (ListView) this.findViewById(R.id.list_view_courses);
         courses_list.setAdapter(adapter);
+
+        courses_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), QuizesTable.class);
+                startActivity(intent);
+            }
+        });
     }
 }

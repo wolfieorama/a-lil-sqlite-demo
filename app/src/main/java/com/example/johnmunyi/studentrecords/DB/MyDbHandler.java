@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.johnmunyi.studentrecords.model.Courses;
 import com.example.johnmunyi.studentrecords.model.Quizes;
@@ -20,10 +21,13 @@ public class MyDbHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "grades.db";
     private static final String TABLE_STUDENTS = "students";
+    private static final String COL_S_ID = "id";
     private static final String COL_STD_NAME = "name";
     private static final String TABLE_COURSES = "courses";
+    private static final String COL_C_ID = "id";
     private static final String COL_CRS_NAME = "name";
     private static final String TABLE_QUIZES = "quizes";
+    private static final String COL_Q_ID = "id";
     private static final String COL_QZ_NUM = "quiz_num";
     private static final String COL_CRS_ID = "courseId";
     private static final String COL_STD_ID = "studentId";
@@ -37,13 +41,13 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String create_table_students = "CREATE TABLE STUDENTS(ID INTEGER PRIMARY_KEY AUTO_INCREMENT UNIQUE," + COL_STD_NAME + " TEXT UNIQUE);";
+        String create_table_students = "CREATE TABLE STUDENTS(" + COL_S_ID + " INTEGER PRIMARY_KEY AUTO_INCREMENT UNIQUE," + COL_STD_NAME + " TEXT UNIQUE);";
         sqLiteDatabase.execSQL(create_table_students);
 
-        String create_table_courses = "CREATE TABLE COURSES(ID INTEGER PRIMARY_KEY AUTO_INCREMENT UNIQUE, " + COL_CRS_NAME + " TEXT UNIQUE);";
+        String create_table_courses = "CREATE TABLE COURSES(" + COL_C_ID + " INTEGER PRIMARY_KEY AUTO_INCREMENT UNIQUE, " + COL_CRS_NAME + " TEXT UNIQUE);";
         sqLiteDatabase.execSQL(create_table_courses);
 
-        String create_table_quizes = "CREATE TABLE QUIZES(ID INTEGER PRIMARY_KEY AUTO_INCREMENT UNIQUE, " + COL_QZ_NUM + " TEXT, " + COL_CRS_ID + " INTEGER, " + COL_STD_ID + " INTEGER, " + COL_QZ_SCORE + " INTEGER);";
+        String create_table_quizes = "CREATE TABLE QUIZES(" + COL_Q_ID + " INTEGER PRIMARY_KEY AUTO_INCREMENT UNIQUE, " + COL_QZ_NUM + " TEXT, " + COL_CRS_ID + " INTEGER, " + COL_STD_ID + " INTEGER, " + COL_QZ_SCORE + " INTEGER);";
         sqLiteDatabase.execSQL(create_table_quizes);
     }
 
@@ -52,28 +56,32 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
     }
 
-    public void insertStudent(String name){
+    public void insertStudent(int id, String name){
         mSqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(COL_S_ID, id);
         values.put(COL_STD_NAME, name);
         mSqLiteDatabase.insert(TABLE_STUDENTS, null, values);
         mSqLiteDatabase.close();
     }
 
-    public void insertCourse(String name){
+    public void insertCourse(int id, String name){
         mSqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(COL_C_ID, id);
+        values.put(COL_CRS_NAME, name);
         values.put(COL_CRS_NAME, name);
         mSqLiteDatabase.insert(TABLE_COURSES, null, values);
         mSqLiteDatabase.close();
     }
 
-    public void insertQuiz(String quiz_num, int courseId, int studentId, int score){
+    public void insertQuiz(int id, String quiz_num, int courseId, int studentId, int score){
         mSqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(COL_Q_ID, id);
         values.put(COL_QZ_NUM, quiz_num);
         values.put(COL_CRS_ID, courseId);
         values.put(COL_STD_ID, studentId);
@@ -118,31 +126,31 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
 //    ArrayList with course specific quizes
 
-    public ArrayList getCourseSpecificQuizes(){
+    public ArrayList getCourseSpecificQuizes(int courseId){
         mSqLiteDatabase = this.getReadableDatabase();
         ArrayList<Quizes> quizes = new ArrayList<Quizes>();
-        int courseId = 0;
 
-        String selectId = "SELECT id FROM COURSES;";
-        Cursor cursor = mSqLiteDatabase.rawQuery(selectId, null);
-
-        if (cursor.moveToNext()){
-            do{
-                courseId = cursor.getInt(0);
-            }while (cursor.moveToNext());
-        }
+//        String selectId = "SELECT id FROM COURSES;";
+//        Cursor cursor = mSqLiteDatabase.rawQuery(selectId, null);
+//
+//        if (cursor.moveToNext()){
+//            do{
+//                courseId = cursor.getInt(0);
+//            }while (cursor.moveToNext());
+//        }
 
         String selectQuizesInCourse = "SELECT * FROM QUIZES WHERE " + COL_CRS_ID + " = " + courseId + ";";
         Cursor cursor1 = mSqLiteDatabase.rawQuery(selectQuizesInCourse, null);
 
 
-        if (cursor.moveToFirst()){
+        if (cursor1.moveToFirst()){
             do{
                 Quizes quize = new Quizes(cursor1.getInt(0), cursor1.getString(1), cursor1.getInt(2), cursor1.getInt(3), cursor1.getInt(4));
                 quizes.add(quize);
-            }while (cursor.moveToNext());
+            }while (cursor1.moveToNext());
         }
         mSqLiteDatabase.close();
+        Log.e("quizes: ", String.valueOf(quizes));
         return quizes;
     }
 }

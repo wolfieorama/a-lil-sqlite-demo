@@ -32,6 +32,6 @@ public class Courses {
 
     @Override
     public String toString() {
-        return "Grades for: " + name;
+        return "Grades for: C00" + id + "-" + name;
     }
 }
