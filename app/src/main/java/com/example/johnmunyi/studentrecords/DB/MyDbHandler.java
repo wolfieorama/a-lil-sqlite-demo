@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.johnmunyi.studentrecords.model.Courses;
+import com.example.johnmunyi.studentrecords.model.Quizes;
 
 import java.util.ArrayList;
 
@@ -113,5 +114,35 @@ public class MyDbHandler extends SQLiteOpenHelper {
         }
         mSqLiteDatabase.close();
         return courses;
+    }
+
+//    ArrayList with course specific quizes
+
+    public ArrayList getCourseSpecificQuizes(){
+        mSqLiteDatabase = this.getReadableDatabase();
+        ArrayList<Quizes> quizes = new ArrayList<Quizes>();
+        int courseId = 0;
+
+        String selectId = "SELECT id FROM COURSES;";
+        Cursor cursor = mSqLiteDatabase.rawQuery(selectId, null);
+
+        if (cursor.moveToNext()){
+            do{
+                courseId = cursor.getInt(0);
+            }while (cursor.moveToNext());
+        }
+
+        String selectQuizesInCourse = "SELECT * FROM QUIZES WHERE " + COL_CRS_ID + " = " + courseId + ";";
+        Cursor cursor1 = mSqLiteDatabase.rawQuery(selectQuizesInCourse, null);
+
+
+        if (cursor.moveToFirst()){
+            do{
+                Quizes quize = new Quizes(cursor1.getInt(0), cursor1.getString(1), cursor1.getInt(2), cursor1.getInt(3), cursor1.getInt(4));
+                quizes.add(quize);
+            }while (cursor.moveToNext());
+        }
+        mSqLiteDatabase.close();
+        return quizes;
     }
 }

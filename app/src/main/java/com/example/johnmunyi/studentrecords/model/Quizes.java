@@ -8,7 +8,7 @@ public class Quizes {
     private String quiz_num;
     private int id,courseId, studentId, score;
 
-    public Quizes(String quiz_num, int id, int courseId, int studentId, int score) {
+    public Quizes(int id, String quiz_num, int courseId, int studentId, int score) {
         this.quiz_num = quiz_num;
         this.id = id;
         this.courseId = courseId;
