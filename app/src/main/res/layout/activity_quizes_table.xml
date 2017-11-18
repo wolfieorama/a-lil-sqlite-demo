@@ -6,5 +6,6 @@
     android:layout_height="match_parent"
     android:id="@+id/quizes_table"
     android:textAlignment="center"
+    android:textSize="30sp"
     tools:context="com.example.johnmunyi.studentrecords.QuizesTable">
 </TableLayout>
