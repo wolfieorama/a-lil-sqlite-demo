@@ -36,13 +36,13 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String create_table_students = "CREATE TABLE STUDENTS(ID INTEGER PRIMARY_KEY AUTO_INCREMENT," + COL_STD_NAME + " TEXT);";
+        String create_table_students = "CREATE TABLE STUDENTS(ID INTEGER PRIMARY_KEY AUTO_INCREMENT UNIQUE," + COL_STD_NAME + " TEXT UNIQUE);";
         sqLiteDatabase.execSQL(create_table_students);
 
-        String create_table_courses = "CREATE TABLE COURSES(ID INTEGER PRIMARY_KEY AUTO_INCREMENT, " + COL_CRS_NAME + " TEXT);";
+        String create_table_courses = "CREATE TABLE COURSES(ID INTEGER PRIMARY_KEY AUTO_INCREMENT UNIQUE, " + COL_CRS_NAME + " TEXT UNIQUE);";
         sqLiteDatabase.execSQL(create_table_courses);
 
-        String create_table_quizes = "CREATE TABLE QUIZES(ID INTEGER PRIMARY_KEY AUTO_INCREMENT, " + COL_QZ_NUM + " TEXT, " + COL_CRS_ID + " INTEGER, " + COL_STD_ID + " INTEGER, " + COL_QZ_SCORE + " INTEGER);";
+        String create_table_quizes = "CREATE TABLE QUIZES(ID INTEGER PRIMARY_KEY AUTO_INCREMENT UNIQUE, " + COL_QZ_NUM + " TEXT, " + COL_CRS_ID + " INTEGER, " + COL_STD_ID + " INTEGER, " + COL_QZ_SCORE + " INTEGER);";
         sqLiteDatabase.execSQL(create_table_quizes);
     }
 
