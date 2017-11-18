@@ -29,12 +29,18 @@ public class MainActivity extends AppCompatActivity {
 
         dbHandler.insertCourse("Fundamentals");
         dbHandler.insertCourse("JSPD");
-        dbHandler.insertCourse("IoT");
+        dbHandler.insertCourse("Stochastic");
+        dbHandler.insertCourse("Machine Learning");
+        dbHandler.insertCourse("Data Structures");
+        dbHandler.insertCourse("Linear Systems");
+        dbHandler.insertCourse("Foundations of SE");
+        dbHandler.insertCourse("Practicum");
 
-//        dbHandler.insertQuiz("Quiz1", 1, 1, 94);
-//        dbHandler.insertQuiz("Quiz2", 2, 2, 99);
-//        dbHandler.insertQuiz("Quiz3", 3, 3, 88);
-//        dbHandler.insertQuiz("Quiz4", 1, 2, 81);
+
+        dbHandler.insertQuiz("Quiz1", 1, 1, 94);
+        dbHandler.insertQuiz("Quiz2", 2, 2, 99);
+        dbHandler.insertQuiz("Quiz3", 3, 3, 88);
+        dbHandler.insertQuiz("Quiz4", 1, 2, 81);
 
         courses = dbHandler.getAllCourses();
         ArrayAdapter<Courses> adapter = new ArrayAdapter<Courses>(
