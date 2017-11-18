@@ -1,13 +1,13 @@
-package com.example.johnmunyi.studentrecords;
+package com.example.johnmunyi.studentrecords.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import java.io.Serializable;
+import com.example.johnmunyi.studentrecords.model.Courses;
+
 import java.util.ArrayList;
 
 /**

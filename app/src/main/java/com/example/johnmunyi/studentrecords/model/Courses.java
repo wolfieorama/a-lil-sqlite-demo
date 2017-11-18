@@ -1,4 +1,4 @@
-package com.example.johnmunyi.studentrecords;
+package com.example.johnmunyi.studentrecords.model;
 
 /**
  * Created by johnmunyi on 11/18/17.

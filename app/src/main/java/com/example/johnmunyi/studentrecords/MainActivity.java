@@ -1,11 +1,14 @@
 package com.example.johnmunyi.studentrecords;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.example.johnmunyi.studentrecords.DB.MyDbHandler;
+import com.example.johnmunyi.studentrecords.model.Courses;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
