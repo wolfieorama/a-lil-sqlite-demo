@@ -130,15 +130,6 @@ public class MyDbHandler extends SQLiteOpenHelper {
         mSqLiteDatabase = this.getReadableDatabase();
         ArrayList<Quizes> quizes = new ArrayList<Quizes>();
 
-//        String selectId = "SELECT id FROM COURSES;";
-//        Cursor cursor = mSqLiteDatabase.rawQuery(selectId, null);
-//
-//        if (cursor.moveToNext()){
-//            do{
-//                courseId = cursor.getInt(0);
-//            }while (cursor.moveToNext());
-//        }
-
         String selectQuizesInCourse = "SELECT * FROM QUIZES WHERE " + COL_CRS_ID + " = " + courseId + ";";
         Cursor cursor1 = mSqLiteDatabase.rawQuery(selectQuizesInCourse, null);
 

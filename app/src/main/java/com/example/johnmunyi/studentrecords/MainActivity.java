@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.johnmunyi.studentrecords.DB.MyDbHandler;
 import com.example.johnmunyi.studentrecords.model.Courses;
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         );
 
         ListView courses_list = (ListView) this.findViewById(R.id.list_view_courses);
+//        TextView myholder = (TextView) this.findViewById(R.id.text_view_course);
+//        final String myid = myholder.getText().toString();
         courses_list.setAdapter(adapter);
 
         courses_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), QuizesTable.class);
                 startActivity(intent);
+
+//                Intent intentBundle = new Intent(getApplicationContext(), QuizesTable.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("cid", myid);
             }
         });
     }
