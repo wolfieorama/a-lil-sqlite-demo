@@ -84,7 +84,7 @@ public class MyDbHandler extends SQLiteOpenHelper {
     public void getAllStudents(){
         mSqLiteDatabase = this.getReadableDatabase();
 
-        String selectStudents = "SELECT * FROM TABLE STUDENTS;";
+        String selectStudents = "SELECT * FROM STUDENTS;";
         Cursor cursor = mSqLiteDatabase.rawQuery(selectStudents, null);
 
         if (cursor.moveToFirst()){
@@ -99,10 +99,10 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
 //    ArrayList of Course returned here for the listView
     public ArrayList getAllCourses(){
-        mSqLiteDatabase = this.getWritableDatabase();
+        mSqLiteDatabase = this.getReadableDatabase();
         ArrayList<Courses> courses = new ArrayList<Courses>();
 
-        String selectCourses = "SELECT * FROM TABLE COURSES";
+        String selectCourses = "SELECT * FROM COURSES;";
         Cursor cursor = mSqLiteDatabase.rawQuery(selectCourses, null);
 
         if (cursor.moveToFirst()){

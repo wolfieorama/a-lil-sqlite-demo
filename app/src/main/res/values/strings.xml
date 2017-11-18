@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Student Records</string>
+    <string name="grades_checker">Grades Checker</string>
 </resources>
